@@ -8,6 +8,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementa camada de serviço.
+ */
 @Service
 public class FitnessService implements FitnessServiceInterface {
 
