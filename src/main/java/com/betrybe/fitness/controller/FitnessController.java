@@ -42,4 +42,6 @@ public class FitnessController implements FitnessControllerInterface {
     }
     return ResponseEntity.status(200).body(workoutDto.get());
   }
+
+  
 }

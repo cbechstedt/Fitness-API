@@ -25,7 +25,9 @@ public class FitnessService implements FitnessServiceInterface {
 
   @Override
   public WorkoutDto saveWorkout(WorkoutCreationDto newWorkoutDto) {
-    return null;
+    Workout newWorkout = newWorkoutDto.dtoToEntity(newWorkoutDto);
+    Workout savedWorkout = fakeFitnessDatabase.saveWorkout(newWorkout);
+    return WorkoutDto.entityToDto(savedWorkout);
   }
 
   @Override
