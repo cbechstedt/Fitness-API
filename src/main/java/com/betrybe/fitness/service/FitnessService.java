@@ -32,14 +32,14 @@ public class FitnessService implements FitnessServiceInterface {
   public Optional<WorkoutDto> getWorkout(Long id) {
     Optional<Workout> workoutOptional = fakeFitnessDatabase.getWorkout(id);
 
-    if (workoutOptional.isPresent()) {
-      Workout workout = workoutOptional.get();
-      WorkoutDto workoutDto = WorkoutDto.entityToDto(workout);
-      
-      return Optional.of(workoutDto);
+    if (workoutOptional.isEmpty()) {
+      return Optional.empty();
     }
 
-    return Optional.empty();
+    Workout workout = workoutOptional.get();
+    WorkoutDto workoutDto = WorkoutDto.entityToDto(workout);
+
+    return Optional.of(workoutDto);
   }
 
   @Override
