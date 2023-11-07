@@ -9,9 +9,12 @@ import java.util.Optional;
  * Interface for the Fitness service component.
  */
 public interface FitnessServiceInterface {
+
   WorkoutDto saveWorkout(WorkoutCreationDto newWorkoutDto);
 
   Optional<WorkoutDto> getWorkout(Long id);
 
   List<WorkoutDto> getAllWorkouts();
+
+  Optional<WorkoutDto> deleteWorkout(Long id);
 }

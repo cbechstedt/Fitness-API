@@ -5,7 +5,6 @@ import com.betrybe.fitness.dto.WorkoutCreationDto;
 import com.betrybe.fitness.dto.WorkoutDto;
 import com.betrybe.fitness.model.Workout;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +31,10 @@ public class FitnessService implements FitnessServiceInterface {
 
   @Override
   public Optional<WorkoutDto> getWorkout(Long id) {
+    if (id == null || id <= 0) {
+      throw new IllegalArgumentException("Invalid ID");
+    }
+
     Optional<Workout> workoutOptional = fakeFitnessDatabase.getWorkout(id);
 
     if (workoutOptional.isEmpty()) {
@@ -48,5 +51,22 @@ public class FitnessService implements FitnessServiceInterface {
   public List<WorkoutDto> getAllWorkouts() {
     List<Workout> workouts = fakeFitnessDatabase.getAllWorkouts();
     return workouts.stream().map(WorkoutDto::entityToDto).toList();
+  }
+
+  @Override
+  public Optional<WorkoutDto> deleteWorkout(Long id) {
+    if (id == null || id <= 0) {
+      throw new IllegalArgumentException("Invalid ID");
+    }
+
+    Optional<Workout> workoutOptional = fakeFitnessDatabase.getWorkout(id);
+
+    if (workoutOptional.isEmpty()) {
+      return Optional.empty();
+    }
+
+    Workout workout = workoutOptional.get();
+    fakeFitnessDatabase.deleteWorkout(id);
+    return Optional.of(WorkoutDto.entityToDto(workout));
   }
 }

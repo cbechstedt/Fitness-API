@@ -2,12 +2,13 @@ package com.betrybe.fitness.controller;
 
 import com.betrybe.fitness.dto.WorkoutCreationDto;
 import com.betrybe.fitness.dto.WorkoutDto;
-import com.betrybe.fitness.service.FitnessService;
 import com.betrybe.fitness.service.FitnessServiceInterface;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,5 +59,21 @@ public class FitnessController implements FitnessControllerInterface {
   public ResponseEntity<List<WorkoutDto>> getAllWorkouts() {
     List<WorkoutDto> workoutDtos = fitnessService.getAllWorkouts();
     return ResponseEntity.status(200).body(workoutDtos);
+  }
+
+  /**
+   * Implementa rota Delete.
+   */
+  @DeleteMapping("/workouts/{id}")
+  public ResponseEntity<WorkoutDto> deleteWorkout(@PathVariable Long id) {
+    try {
+      Optional<WorkoutDto> deletedWorkout = fitnessService.deleteWorkout(id);
+      if (deletedWorkout.isPresent()) {
+        return ResponseEntity.status(204).body(deletedWorkout.get());
+      }
+      return ResponseEntity.status(404).build();
+    } catch (IllegalArgumentException e) {
+      return ResponseEntity.status(400).body(null);
+    }
   }
 }
