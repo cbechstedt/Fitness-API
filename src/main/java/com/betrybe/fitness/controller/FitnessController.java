@@ -68,10 +68,10 @@ public class FitnessController implements FitnessControllerInterface {
   public ResponseEntity<WorkoutDto> deleteWorkout(@PathVariable Long id) {
     try {
       Optional<WorkoutDto> deletedWorkout = fitnessService.deleteWorkout(id);
-      if (deletedWorkout.isPresent()) {
-        return ResponseEntity.status(204).body(deletedWorkout.get());
+      if (deletedWorkout.isEmpty()) {
+        return ResponseEntity.status(404).build();
       }
-      return ResponseEntity.status(404).build();
+      return ResponseEntity.status(204).body(deletedWorkout.get());
     } catch (IllegalArgumentException e) {
       return ResponseEntity.status(400).body(null);
     }
